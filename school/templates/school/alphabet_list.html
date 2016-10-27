@@ -1,0 +1,10 @@
+{% extends 'school/base.html' %}
+
+{% block content %}
+    <h2>Choisissez un niveau :</h2>
+        <div class="dictee">
+            <h1><a href="{% url 'exo_alphabet' level=1 %}">Alphabet niveau 1</a></h1>
+            <h1><a href="{% url 'exo_alphabet' level=2 %}">Alphabet niveau 2</a></h1>
+        </div>
+
+{% endblock content %}

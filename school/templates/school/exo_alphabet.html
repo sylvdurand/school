@@ -1,0 +1,37 @@
+{% extends 'school/base.html' %}
+{% load staticfiles %}
+{% block content %}
+    <h2>Alphabet : </h2>
+    {% for lettre in list_alphabet %}
+        <font size="6">{{ lettre }}</font>
+    {% endfor %}
+    <hr>
+    <h2>Devine les lettres avant et aprés la lettre {{ lettre }}</h2>
+    <div class="dictee">
+        <form method="post">
+            {% csrf_token %}
+            <table>
+                {% if result == False or result == True %}
+                    <tr>{% if result_avant %}<td style="color:green" width="33%">{% else %}<td style="color:red" width="33%">{% endif %}
+                        lettre avant <input type="text" name="proposition_avant" class="inputbox" value={{ reponse_avant }}> </td>
+                        <td width="33%"><center><font size="8">{{ lettre }}</font></center></td>
+                        {% if result_apres %}<td style="color:green" width="33%">{% else %}<td style="color:red" width="33%">{% endif %}
+                        lettre après <input type="text" name="proposition_apres" class="inputbox" value={{ reponse_apres }}> </td>
+                    </tr>
+                {% else %}
+                    <tr><td width="33%">lettre avant <input type="text" name="proposition_avant" class="inputbox" value=""> </td>
+                        <td width="33%"><center><font size="8">{{ lettre }}</font></center></td>
+                        <td width="33%">lettre après <input type="text" name="proposition_apres" class="inputbox" value=""> </td>
+                    </tr>
+                {% endif %}
+            </table>
+            <input type="submit" name="Verifier" value="Verifier">
+            <input type="submit" name="Nouveau" value="Nouveau">
+
+        </form>
+    </div>
+
+
+
+{% endblock content %}
+

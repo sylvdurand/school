@@ -1,0 +1,39 @@
+{% extends 'school/base.html' %}
+{% load staticfiles %}
+{% block content %}
+<head>
+        <script src='https://code.responsivevoice.org/responsivevoice.js'></script>
+</head>
+    <h2>Voici la dictée {{ dictee.title }}</h2>
+    <hr>
+    <div>
+        {% if result == True %}
+            <script type="text/javascript">
+            $(function() {
+                responsiveVoice.speak("bravo","French Female");
+                })
+            </script>
+            <h2 style="color:green">Bravo !!! {{ expected_mot }}</h2>
+        {% else %}
+            {% if result == False %}
+                <h2 style="color:red">Et non la bonne orthographe est {{ expected_mot }}</h2>
+            {% endif %}
+        {% endif %}
+        <form method="post">
+            {% csrf_token %}
+            <table>
+                <tr>
+                    <td><input onclick='responsiveVoice.speak("{{mot}}","French Female");' type='button' value='🔊 Ecouter le mot'/></td>
+                    <td><input type="text" name="proposition" autocomplete="off"></td>
+                    <td><input type="submit" name="Verifier" value="Verifier"></td>
+                </tr>
+            </table>
+            <hr>
+
+        </form>
+    </div>
+
+
+
+{% endblock content %}
+

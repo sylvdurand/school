@@ -1,0 +1,16 @@
+{% extends 'school/base.html' %}
+
+{% block content %}
+    <h2>Voici la liste des dictées :</h2>
+    {% for dictee in dictees %}
+        <div class="dictee">
+            <div class="date">
+                {{ dictee.created_date }}
+            </div>
+            <h1><a href="{% url 'exo_dictee' pk=dictee.pk %}">Titre: {{ dictee.title }}</a></h1>
+            <p>{{ dictee.text|linebreaksbr }}</p>
+        </div>
+    {% empty %}
+        aucune dictée enregistrée
+    {% endfor %}
+{% endblock content %}
