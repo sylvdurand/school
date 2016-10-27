@@ -2,8 +2,6 @@ from django.shortcuts import render
 from models import Dictee
 
 import random
-import pyttsx
-import time
 import string
 
 # Create your views here.
