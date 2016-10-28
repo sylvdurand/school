@@ -9,6 +9,10 @@ urlpatterns = [
 
     url(r'^alphabet_list/$', views.alphabet_list, name='alphabet_list'),
     url(r'^exo_alphabet/(?P<level>[0-9]+)/$', views.exo_alphabet, name='exo_alphabet'),
+    url(r'^exo_ecrire_alphabet/(?P<level>[0-9]+)/$', views.exo_ecrire_alphabet, name='exo_ecrire_alphabet'),
+
+    url(r'^math_acceuil/(?P<type>[a-z]+)/$', views.math_acceuil, name='math_acceuil'),
+    url(r'^math_calcul/(?P<type>[a-z]+)/(?P<chiffre>[1-9]+)$', views.math_calcul, name='math_calcul'),
 
 ]
 

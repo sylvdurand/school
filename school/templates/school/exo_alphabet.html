@@ -2,9 +2,11 @@
 {% load staticfiles %}
 {% block content %}
     <h2>Alphabet : </h2>
-    {% for lettre in list_alphabet %}
-        <font size="6">{{ lettre }}</font>
-    {% endfor %}
+    {% if level == '1' %}
+        {% for lettre in list_alphabet %}
+            <font size="6">{{ lettre }}</font>
+        {% endfor %}
+    {% endif %}
     <hr>
     <h2>Devine les lettres avant et aprés la lettre {{ lettre }}</h2>
     <div class="dictee">
@@ -19,14 +21,18 @@
                         lettre après <input type="text" name="proposition_apres" class="inputbox" value={{ reponse_apres }}> </td>
                     </tr>
                 {% else %}
-                    <tr><td width="33%">lettre avant <input type="text" name="proposition_avant" class="inputbox" value=""> </td>
-                        <td width="33%"><center><font size="8">{{ lettre }}</font></center></td>
-                        <td width="33%">lettre après <input type="text" name="proposition_apres" class="inputbox" value=""> </td>
+                    <tr><td width="25%">lettre avant <input type="text" name="proposition_avant" class="inputbox" value=""> </td>
+                        <td width="25%"><center><font size="8">{{ lettre }}</font></center></td>
+                        <td width="25%">lettre après <input type="text" name="proposition_apres" class="inputbox" value=""> </td>
+                        <td width="25%"><div class="bouton_moyen"><input type="submit" name="Verifier" value="Verifier"></div></td>
                     </tr>
                 {% endif %}
             </table>
-            <input type="submit" name="Verifier" value="Verifier">
-            <input type="submit" name="Nouveau" value="Nouveau">
+            <hr>
+            <div class="bouton_moyen">
+                <center><div class="bouton_moyen"><input type="submit" name="Nouveau" value="Nouveau"></div></center>
+            </div>
+            <hr>
 
         </form>
     </div>

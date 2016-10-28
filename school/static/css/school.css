@@ -45,3 +45,21 @@ h1, h2, h3, h4 {
 .dictee h1 a, .post h1 a:visited {
     color: #000000;
 }
+
+.bouton_moyen input  , .aide input
+{
+   width:250px;
+   height:60px;
+   font-size:25px;
+   line-height:50px;
+   text-align:center;
+}
+
+.saisie_long input[type="text"]
+{
+   width:700px;
+   height:60px;
+   font-size:25px;
+   line-height:50px;
+   text-align:center;
+}

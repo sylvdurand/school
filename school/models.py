@@ -16,11 +16,10 @@ class Dictee(models.Model):
     created_date = models.DateTimeField(
             default=timezone.now)
     niveau = models.PositiveSmallIntegerField(null=True, default=0)
-
+    classe = models.CharField(null=True, default='CE1')
     def publish(self):
         self.published_date = timezone.now()
         self.save()
 
     def __str__(self):
         return self.title
-

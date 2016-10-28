@@ -1,10 +1,13 @@
 {% extends 'school/base.html' %}
 
 {% block content %}
-    <h2>Choisissez un niveau :</h2>
+    <h1>Choisissez un niveau :</h1>
         <div class="dictee">
-            <h1><a href="{% url 'exo_alphabet' level=1 %}">Alphabet niveau 1</a></h1>
-            <h1><a href="{% url 'exo_alphabet' level=2 %}">Alphabet niveau 2</a></h1>
+
+            <li><h2><a href="{% url 'exo_alphabet' level=1 %}">Lettres avant/aprés (niveau 1)</a></h2></li>
+            <li><h2><a href="{% url 'exo_alphabet' level=2 %}">Lettres avant/aprés (niveau 2)</a></h2></li>
+            <li><h2><a href="{% url 'exo_ecrire_alphabet' level=1 %}">Ecrire l'alphabet.</a></h2></li>
+            <li><h2><a href="{% url 'exo_ecrire_alphabet' level=2 %}">Ecrire l'alphabet à l'envers.</a></h2></li>
         </div>
 
 {% endblock content %}
