@@ -1,0 +1,43 @@
+{% extends 'school/base.html' %}
+{% load staticfiles %}
+{% block content %}
+    <head>
+        <script src='https://code.responsivevoice.org/responsivevoice.js'></script>
+        <script src="http://code.jquery.com/jquery-latest.js" type="text/javascript"></script>
+       <script type="text/javascript" src="/static/js/submitform.js"></script>
+    </head>
+    <h2> {{probleme.title}} </h2>
+    <hr>
+    <div>
+        <script type="text/javascript">
+            $(function() {
+                    responsiveVoice.OnVoiceReady = function() {
+                        responsiveVoice.speak("{{txt_a_dire}}","French Female",{rate: 0.8,pitch: 1,volume: 1});
+                    }
+                })
+        </script>
+        {% if result == True %}
+            <h2 style="color:green">{{ txt_a_ecrire }}</h2>
+        {% else %}
+            {% if result == False %}
+                <h2 style="color:red">{{ txt_a_ecrire }}</h2>
+            {% else %}
+                <h2 style="color:black">{{ txt_a_ecrire }}</h2>
+            {% endif %}
+        {% endif %}
+        <form method="post">
+            {% csrf_token %}
+            <table>
+                <tr>
+                    <td width="500"><input type="text" name="proposition" autocomplete="off" style="width:100%;"></td>
+                    <td><div class="bouton_moyen"><input type="submit" name="Verifier" value="Verifier"></div></td>
+                </tr>
+            </table>
+            <hr>
+                <center><div class="bouton_moyen"><input type="submit" name="Nouveau" value="Nouveau"></div></center>
+            <hr>
+        </form>
+    </div>
+
+{% endblock content %}
+

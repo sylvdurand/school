@@ -1,0 +1,25 @@
+{% extends 'school/base.html' %}
+
+{% block content %}
+    <h1>Voici la liste des problémes :</h1>
+
+    {% regroup problemes by classe as classe_list %}
+
+    <ul>
+    {% for classe in classe_list %}
+        <li><h2>{{ classe.grouper }}</h2>
+        <ul>
+            {% for probleme in classe.list %}
+              <li><h2><a href="{% url 'exo_probleme' pk=probleme.pk %}">{{ probleme.title }}</a></h2>{{ probleme.text }}</li>
+            {% endfor %}
+        </ul>
+        </li>
+    {% empty %}
+        aucun probleme enregistré
+    {% endfor %}
+    </ul>
+    {% endblock content %}
+
+
+
+
