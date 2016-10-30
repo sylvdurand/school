@@ -20,7 +20,7 @@ def dictee_list(request):
 def exo_dictee(request, pk):
     dictee = Dictee.objects.get(pk=pk)
     result = None
-    list_mots = dictee.text.split()
+    list_mots = dictee.text.split(';')
 
     if request.method == "POST":
         mot = request.session['mot']
@@ -148,19 +148,26 @@ def math_calcul(request, type, chiffre):
 
     if request.method == "POST":
         if 'Nouveau' in request.POST :
+            # choisir deux nombres au hasard
+            a = random.randint(0, 10** int(chiffre))
+            b = random.randint(0, 10 ** int(chiffre))
             if type == 'additions':
                 op = '+'
             elif type == 'soustractions':
                 op = '-'
+                if (a < b):
+                    tmp= a
+                    a = b
+                    b = tmp
             elif type == 'multiplications':
                 op = '*'
             elif type == 'divisions':
                 op = '/'
+                tmp = b
+                b = a * tmp
             else:
                 op ='+'
-            # choisir deux nombres au hasard
-            a = random.randint(0, 10** int(chiffre))
-            b = random.randint(0, 10 ** int(chiffre))
+
             question = '%d %s %d = '% (a, op, b)
             request.session['expected_reponse'] = str(eval('%d %s %d'% (a, op, b)))
             request.session['question'] = '%d %s %d'% (a, op, b)
