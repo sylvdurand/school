@@ -21,7 +21,8 @@ def exo_dictee(request, pk):
     dictee = Dictee.objects.get(pk=pk)
     result = None
     list_mots = dictee.text.split(';')
-
+    if 'list_mots' in request.session:
+        list_mots = request.session['list_mots'].split(';')
     if request.method == "POST":
         mot = request.session['mot']
         if 'proposition' in request.POST:
@@ -32,23 +33,33 @@ def exo_dictee(request, pk):
 
             if mot == reponse:
                 result = True
-                txt_a_dire = u"Bravo %s sécrit %s %s" % (mot,' '.join(list_lettre),' '*500)
+                txt_a_dire = u"Bravo %s sécrit %s %s" % (mot, ' '.join(list_lettre), ' '*500)
                 expected_mot = mot
-                # passer a un nouveau mot
-                index_mot = random.randint(0, len(list_mots)-1)
-                mot = list_mots[index_mot]
-                txt_a_dire = u"%scomment sécrit %s" % (txt_a_dire,mot)
+                if list_mots.count(mot) > 1:
+                    list_mots.pop(list_mots.index(mot))
+                while mot == expected_mot:
+                    # passer a un nouveau mot
+                    index_mot = random.randint(0, len(list_mots)-1)
+                    mot = list_mots[index_mot]
+
+                txt_a_dire = u"%scomment sécrit %s" % (txt_a_dire, mot)
                 request.session['mot'] = mot
+                request.session['list_mots'] = ';'.join(list_mots)
             else:
                 result = False
-                txt_a_dire = u"Et non %s sécrit %s" % (mot,u' '.join(list_lettre))
+                txt_a_dire = u"Et non %s sécrit %s" % (mot, u' '.join(list_lettre))
                 expected_mot = mot
+                list_mots.append(mot)
+                list_mots.append(mot)
+                request.session['list_mots'] = ';'.join(list_mots)
 
     else:
+        list_mots = dictee.text.split(';')
         index_mot = random.randint(0, len(list_mots)-1)
         mot = list_mots[index_mot]
         txt_a_dire = u"comment sécrit %s" % mot
         request.session['mot'] = mot
+        request.session['list_mots'] = ';'.join(list_mots)
     return render(request, 'school/exo_dictee.html', locals())
 
 
