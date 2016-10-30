@@ -2,14 +2,23 @@
 
 {% block content %}
     <h2>Voici la liste des dictées :</h2>
-    {% for dictee in dictees %}
-        <div class="dictee">
-            <div class="date">
-                {{ dictee.created_date }}
+
+    {% regroup dictees by classe as classe_list %}
+
+    <ul>
+    {% for classe in classe_list %}
+        <li><h2>{{ classe.grouper }}</h2>
+        <ul>
+
+        {% for dictee in classe.list %}
+            <div class="dictee">
+                <div class="date">
+                    {{ dictee.created_date }}
+                </div>
+                <h1><a href="{% url 'exo_dictee' pk=dictee.pk %}">{{ dictee.title }}</a></h1>
+                <p>{{ dictee.text }}</p>
             </div>
-            <h1><a href="{% url 'exo_dictee' pk=dictee.pk %}">Titre: {{ dictee.title }}</a></h1>
-            <p>{{ dictee.text|linebreaksbr }}</p>
-        </div>
+        {% endfor %}
     {% empty %}
         aucune dictée enregistrée
     {% endfor %}

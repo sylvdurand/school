@@ -10,7 +10,7 @@
         <li><h2>{{ classe.grouper }}</h2>
         <ul>
             {% for probleme in classe.list %}
-              <li><h2><a href="{% url 'exo_probleme' pk=probleme.pk %}">{{ probleme.title }}</a></h2>{{ probleme.text }}</li>
+              <li><h2><a href="{% url 'exo_probleme' pk=probleme.pk %}">{{ probleme.title }}</a></h2>{{ probleme.text|linebreaksbr }}</li>
             {% endfor %}
         </ul>
         </li>
