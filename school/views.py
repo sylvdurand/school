@@ -185,24 +185,29 @@ def math_calcul(request, type, chiffre):
                 txt_a_dire = u"Et non, %s = %s" % (question, expected)
                 txt_a_ecrire = u"Et non, %s = %s" % (question, expected)
     else:
+        # choisir deux nombres au hasard
+        a = random.randint(0, 10** int(chiffre))
+        b = random.randint(0, 10** int(chiffre))
         if type == 'additions':
             op = '+'
         elif type == 'soustractions':
             op = '-'
+            a = random.randint(b, 10** int(chiffre))
         elif type == 'multiplications':
             op = '*'
         elif type == 'divisions':
             op = '/'
+            tmp = b
+            b = a * tmp
         else:
             op ='+'
-        # choisir deux nombres au hasard
-        a = random.randint(0, 10)
-        b = random.randint(0, 10)
+
         question = '%d %s %d = '% (a, op, b)
         request.session['expected_reponse'] = str(eval('%d %s %d'% (a, op, b)))
         request.session['question'] = '%d %s %d'% (a, op, b)
         txt_a_dire = u'combien font %d %s %d' % (a, op, b)
     txt_a_dire = txt_a_dire.replace(u'*', u'multiplié par')
+    txt_a_dire = txt_a_dire.replace(u'-', u'moins')
     return render(request, 'school/math_calcul.html', locals())
 
 
