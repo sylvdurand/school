@@ -24,10 +24,10 @@ class Dictee(models.Model):
     )
     title = models.CharField(max_length=200)
     text = models.TextField(default='')
-    type = models.CharField(max_length=1, choices=TYPE_DE_DICTEE, default='T')
+    type = models.CharField(max_length=1, choices=TYPE_DE_DICTEE, default='L')
     created_date = models.DateTimeField(default=timezone.now)
     classe = models.CharField(max_length=6,choices=TYPE_CLASSE, default='CE1C', null=True)
-    niveau = models.PositiveSmallIntegerField(null=True, default=0)
+    niveau = models.PositiveSmallIntegerField(null=True, default=1)
     def publish(self):
         self.published_date = timezone.now()
         self.save()

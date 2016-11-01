@@ -2,9 +2,11 @@
 
 from django.shortcuts import render
 from models import Dictee, Probleme
+from forms import DicteeForm
 
 import random
 import string
+import datetime
 
 # Create your views here.
 
@@ -62,6 +64,20 @@ def exo_dictee(request, pk):
         request.session['list_mots'] = ';'.join(list_mots)
     return render(request, 'school/exo_dictee.html', locals())
 
+
+def dictee_new(request):
+    if request.method == "POST":
+        form = DicteeForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.published_date = datetime.datetime.now()
+            post.save()
+            dictees = Dictee.objects.all()
+            return render(request, 'school/dictee_list.html', locals())
+    else:
+        form = DicteeForm()
+    return render(request, 'school/dictee_new.html', {'form': form})
 
 ################################  ALPHABET  ################################
 def alphabet_list(request):

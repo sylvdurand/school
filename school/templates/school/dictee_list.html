@@ -1,6 +1,11 @@
 {% extends 'school/base.html' %}
 
 {% block content %}
+
+    <h2>Ajouter un dictée :</h2>
+        <a href="{% url 'dictee_new' %}">Ajouter une dictée</a>
+    <hr>
+
     <h2>Voici la liste des dictées :</h2>
 
     {% regroup dictees by classe as classe_list %}

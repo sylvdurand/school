@@ -1,0 +1,17 @@
+{% extends 'school/base.html' %}
+
+{% block content %}
+    <h1>Nouvelle dictée</h1>
+    <hr>
+    <i><br>Mettre un titre dans <b>Title</b> et la classe dans <b>Classe</b> pour la retrouver plus facilement.
+        <br><b>Type</b> permet de choisir si c'est une liste de mot qui va défiler au hasard, ou une dictée classique avec une suite logique de phrase.
+        <br>Entrez le texte de la dictée dans <b>Text</b>, si c'est une liste de mots, les séparer par un point virgule
+        <br>(exemple : la maison;mon chien;cependant)
+        <br><b>Niveau</b> de 1 à 10, (1 pour facile, 10 pour très difficile).
+    </i>
+    <hr>
+    <form method="POST" class="post-form">{% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="save btn btn-default">Save</button>
+    </form>
+{% endblock %}
