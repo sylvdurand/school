@@ -16,13 +16,8 @@
         <ul>
 
         {% for dictee in classe.list %}
-            <div class="dictee">
-                <div class="date">
-                    {{ dictee.created_date }}
-                </div>
-                <h1><a href="{% url 'exo_dictee' pk=dictee.pk %}">{{ dictee.title }}</a></h1>
-                <p>{{ dictee.text }}</p>
-            </div>
+            <h2><a href="{% url 'exo_dictee' pk=dictee.pk %}">{{ dictee.title }}</a></h2>
+            {{ dictee.text }}
         {% endfor %}
         </ul>
         </li>
