@@ -23,8 +23,9 @@ def exo_dictee(request, pk):
     dictee = Dictee.objects.get(pk=pk)
     result = None
     list_mots = dictee.text.split(';')
-    step = (1000/(4*len(list_mots)))
+    step = (1000/(3*len(list_mots)))
     nb_ok_de_suite = 0
+
     if 'list_mots' in request.session:
         list_mots = request.session['list_mots'].split(';')
     if 'position_bipbip' in request.session:
@@ -45,7 +46,7 @@ def exo_dictee(request, pk):
                 expected_mot = mot
                 position_bipbip += step
                 nb_ok_de_suite += 1
-                if nb_ok_de_suite > 4:
+                if nb_ok_de_suite > 2:
                     position_bipbip += step
 
 
