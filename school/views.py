@@ -23,8 +23,14 @@ def exo_dictee(request, pk):
     dictee = Dictee.objects.get(pk=pk)
     result = None
     list_mots = dictee.text.split(';')
+    step = (1000/(4*len(list_mots)))
+    nb_ok_de_suite = 0
     if 'list_mots' in request.session:
         list_mots = request.session['list_mots'].split(';')
+    if 'position_bipbip' in request.session:
+        position_bipbip = request.session['position_bipbip']
+    if 'nb_ok_de_suite' in request.session:
+        nb_ok_de_suite = request.session['nb_ok_de_suite']
     if request.method == "POST":
         mot = request.session['mot']
         if 'proposition' in request.POST:
@@ -37,6 +43,12 @@ def exo_dictee(request, pk):
                 result = True
                 txt_a_dire = u"Bravo %s sécrit %s %s" % (mot, ' '.join(list_lettre), ' '*500)
                 expected_mot = mot
+                position_bipbip += step
+                nb_ok_de_suite += 1
+                if nb_ok_de_suite > 4:
+                    position_bipbip += step
+
+
                 if list_mots.count(mot) > 1:
                     list_mots.pop(list_mots.index(mot))
                 while mot == expected_mot:
@@ -49,6 +61,7 @@ def exo_dictee(request, pk):
                 request.session['list_mots'] = ';'.join(list_mots)
             else:
                 result = False
+                nb_ok_de_suite = 0
                 txt_a_dire = u"Et non %s sécrit %s" % (mot, u' '.join(list_lettre))
                 expected_mot = mot
                 list_mots.append(mot)
@@ -60,8 +73,17 @@ def exo_dictee(request, pk):
         index_mot = random.randint(0, len(list_mots)-1)
         mot = list_mots[index_mot]
         txt_a_dire = u"comment sécrit %s" % mot
+        position_bipbip = 0
+        nb_ok_de_suite = 0
         request.session['mot'] = mot
         request.session['list_mots'] = ';'.join(list_mots)
+
+    if position_bipbip > 1000:
+        nb_ok_de_suite = 1000
+        position_bipbip = 1000
+    request.session['nb_ok_de_suite'] = nb_ok_de_suite
+    request.session['position_bipbip'] = position_bipbip
+
     return render(request, 'school/exo_dictee.html', locals())
 
 
