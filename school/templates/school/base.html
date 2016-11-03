@@ -1,24 +1,50 @@
-{% load staticfiles %}
-<html>
+<!DOCTYPE html5>
+{% load static from staticfiles %}
+
+<html lang="fr" class="ie10">
     <head>
-        <title>Django Girls blog</title>
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-        <link rel="stylesheet" href="{% static 'css/school.css' %}">
+        <link rel="stylesheet" href="{% static 'css/school_new.css' %}">
         <link href="https://fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+        <title><a href="/" align="absmiddle">Ecole au logis</a></title>
+
     </head>
-<body>
-    <div class="page-header">
-        <center><h1><a href="/">Ecole au logis</a></h1></center>
-    </div>
-    <div class="content container">
-        <div class="row">
-            <div class="col-md-8">
-            {% block content %}
-            {% endblock %}
+        <div class="container" style="margin: 10px auto; width: 1100px; background-color: white; padding: 15px; border: 2px outset lightgrey;">
+            <div id="header">
+                            <div class="stmp-bottom container">
+                <ul id="menu-demo2">
+                <li><a href="/alphabet_list" class="title">Alphabet</a>
+                </li>
+                <li><a href="/dictee_list" class="title">Dictées</a>
+                </li>
+                <li><a href="/math_acceuil/acceuil" class="title">Maths</a>
+                    <ul>
+                        <li><a href="/math_acceuil/problemes">Problémes</a></li>
+                        <li><a href="/math_acceuil/calculs">Calculs</a></li>
+                    </ul>
+                </li>
+                </ul>
+            </div>
+                <div class="page-header">
+                    <center><h1><a href="/">Ecole au logis</a></h1></center>
+                </div>
+
+        </div>
             </div>
         </div>
-    </div>
-</body>
+
+
+        <div id="content" class="homepage">
+            <div>
+                {% block content %}
+                {% endblock %}
+            </div>
+        </div>
+<script>
+function clicked(e)
+{
+    if(!confirm('Are you sure?'))e.preventDefault();
+}
+</script>
 
 </html>
+
