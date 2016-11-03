@@ -9,13 +9,7 @@
     <h2>Voici la dictée {{ dictee.title }}</h2>
     <hr>
     <div>
-        <script type="text/javascript">
-            $(function() {
-                    responsiveVoice.OnVoiceReady = function() {
-                        responsiveVoice.speak("{{txt_a_dire}}","French Female",{rate: 1,pitch: 1,volume: 1});
-                    }
-                })
-        </script>
+
         {% if result == True %}
             <h2 style="color:green">Bravo !!! {{ expected_mot }}</h2>
         {% else %}
@@ -46,6 +40,21 @@
     {% else %}
         <img  style="position:absolute; TOP:300px; LEFT:{{position_bipbip}}px;" src="{% static 'images/road_runner_cours.png' %}" alt="My image"/>
     {% endif  %}
+
+
+    <script type="text/javascript">
+        $(function() {
+                responsiveVoice.OnVoiceReady = function() {
+                    responsiveVoice.speak("{{txt_a_dire}}","French Female",{rate: 1,pitch: 1,volume: 1});
+                }
+            })
+    </script>
+    <script type="text/javascript">
+
+        window.onload = () => {
+    responsiveVoice.speak("{{txt_a_dire}}","French Female",{rate: 1,pitch: 1,volume: 1});
+}
+    </script>
 
 {% endblock content %}
 
