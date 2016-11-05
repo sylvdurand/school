@@ -47,12 +47,12 @@ class Probleme(models.Model):
     title = models.CharField(max_length=200)
     text = models.TextField(default='')
     formule_resultat = models.CharField(default='',max_length=200)
-    unite_resultat = models.CharField(default='',max_length=20)
+    unite_resultat = models.CharField(default='',max_length=20, null=True)
     created_date = models.DateTimeField(default=timezone.now)
     classe = models.CharField(max_length=6,choices=TYPE_CLASSE, default='CE1C', null=True)
 
     def __str__(self):
-        return self.title
+        return '%s' % self.title
 
 
 class Score(models.Model):
