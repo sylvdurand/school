@@ -34,6 +34,12 @@ def is_float(v):
     except:
         return False
 
+def format_speak(txt):
+    dic_replace_speak = {u'-':u'moins', u'*': u'multiplié par', u"'": u'apostrophe',u'=': u'égal'}
+    for o, d in dic_replace_speak.items():
+        txt = txt.replace(o,d)
+    return txt
+
 
 def exo_dictee(request, pk):
     dictee = Dictee.objects.get(pk=pk)
@@ -272,8 +278,8 @@ def math_calcul(request, type, chiffre):
         request.session['expected_reponse'] = str(eval('%d %s %d'% (a, op, b)))
         request.session['question'] = '%d %s %d'% (a, op, b)
         txt_a_dire = u'combien font %d %s %d' % (a, op, b)
-    txt_a_dire = txt_a_dire.replace(u'*', u'multiplié par')
-    txt_a_dire = txt_a_dire.replace(u'-', u'moins')
+
+    txt_a_dire = format_speak(txt_a_dire)
     return render(request, 'school/math_calcul.html', locals())
 
 
@@ -335,15 +341,16 @@ def probleme_new_value(probleme):
             dic_var, txt_a_ecrire, exp_expected = compute_new_var(dic_var, var, txt_a_ecrire,exp_expected)
     # faire le calcul de la valeur attendu
     expected = eval(exp_expected)
-    return expected, txt_a_ecrire
+    return expected, txt_a_ecrire, exp_expected
 
 def exo_probleme(request, pk):
     probleme = Probleme.objects.get(pk=pk)
 
     if request.method == "POST":
         if 'Nouveau' in request.POST :
-            expected, txt_a_ecrire = probleme_new_value(probleme)
+            expected, txt_a_ecrire, exp_expected = probleme_new_value(probleme)
             request.session['expected_reponse'] = str(expected)
+            request.session['exp_expected'] = str(exp_expected)
             request.session['question'] = txt_a_ecrire
             return render(request, 'school/exo_probleme.html', locals())
 
@@ -351,21 +358,24 @@ def exo_probleme(request, pk):
             reponse = request.POST['proposition']
             expected = request.session['expected_reponse']
             question = request.session['question']
+            exp_expected = request.session['exp_expected']
             expected_without_unit = expected.replace(probleme.unite_resultat,'').strip()
             if reponse == expected or reponse == expected_without_unit:
                 result = True
-                txt_a_dire = u"Bravo, %s la réponse est %s" % (question, expected)
-                txt_a_dire = txt_a_dire.replace('-','moins')
-                txt_a_ecrire = u"Bravo, %s la réponse est %s" % (question, expected)
+                txt_a_dire = u"Bravo, la , la réponse est %s = %s" % (exp_expected, expected)
+                txt_a_dire = format_speak(txt_a_dire)
+                txt_a_ecrire = u"%s\nBravo, la réponse est %s = %s" % (question, exp_expected, expected)
             else:
                 result = False
-                txt_a_dire = u"Et non, %s la bonne réponse est %s" % (question, expected)
-                txt_a_dire = txt_a_dire.replace('-','moins')
-                txt_a_ecrire = u"Et non, %s la bonne réponse est %s" % (question, expected)
+                txt_a_dire = u"Et non, la bonne réponse est %s = %s" % (exp_expected, expected)
+                txt_a_dire = format_speak(txt_a_dire)
+                txt_a_ecrire = u"%s\nEt non, la bonne réponse est %s = %s" % (question, exp_expected, expected)
     else:
-        expected,txt_a_ecrire = probleme_new_value(probleme)
+        expected,txt_a_ecrire, exp_expected = probleme_new_value(probleme)
         if probleme.unite_resultat == 'na':
             probleme.unite_resultat = ''
         request.session['expected_reponse'] = '%s %s' % (str(expected), probleme.unite_resultat)
         request.session['question'] = txt_a_ecrire
+        request.session['exp_expected'] = str(exp_expected)
+
     return render(request, 'school/exo_probleme.html', locals())
