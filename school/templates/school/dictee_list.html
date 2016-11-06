@@ -1,9 +1,13 @@
 {% extends 'school/base.html' %}
+{% load static %}
 
 {% block content %}
 
-    <h2>Ajouter un dictée :</h2>
-        <a href="{% url 'dictee_new' %}">Ajouter une dictée</a>
+    <h2>Ajouter une dictée :</h2>
+        <a href="{% url 'dictee_new' %}">
+            <img title="Créer une nouvelle dictée" src="{% static 'images/bullet_add_32.gif' %}" alt="Django" align="absmiddle" />
+            Ajouter une dictée
+        </a>
     <hr>
 
     <h2>Voici la liste des dictées :</h2>

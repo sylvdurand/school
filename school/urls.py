@@ -17,6 +17,7 @@ urlpatterns = [
     url(r'^math_acceuil/(?P<type>[a-z]+)/$', views.math_acceuil, name='math_acceuil'),
     url(r'^math_calcul/(?P<type>[a-z]+)/(?P<chiffre>[1-9]+)$', views.math_calcul, name='math_calcul'),
     url(r'^exo_probleme/(?P<pk>[1-9]+)$', views.exo_probleme, name='exo_probleme'),
+    url(r'^probleme_new/$', views.probleme_new, name='probleme_new'),
 
 ]
 

@@ -2,7 +2,7 @@
 
 from django.shortcuts import render
 from models import Dictee, Probleme
-from forms import DicteeForm
+from forms import DicteeForm, ProblemeForm
 
 import random
 import string
@@ -12,11 +12,6 @@ import datetime
 
 def acceuil(request):
     return render(request, 'school/acceuil.html', {})
-
-################################  DICTEES  ################################
-def dictee_list(request):
-    dictees = Dictee.objects.all()
-    return render(request, 'school/dictee_list.html', locals())
 
 
 def is_int(v):
@@ -40,6 +35,11 @@ def format_speak(txt):
         txt = txt.replace(o,d)
     return txt
 
+################################  DICTEES  ################################
+def dictee_list(request):
+    dictees = Dictee.objects.all()
+    return render(request, 'school/dictee_list.html', locals())
+
 
 def exo_dictee(request, pk):
     dictee = Dictee.objects.get(pk=pk)
@@ -47,6 +47,7 @@ def exo_dictee(request, pk):
     list_mots = dictee.text.split(';')
     step = (1000/(3*len(list_mots)))
     nb_ok_de_suite = 0
+    position_bipbip = 0
 
     if 'list_mots' in request.session:
         list_mots = request.session['list_mots'].split(';')
@@ -362,7 +363,7 @@ def exo_probleme(request, pk):
             expected_without_unit = expected.replace(probleme.unite_resultat,'').strip()
             if reponse == expected or reponse == expected_without_unit:
                 result = True
-                txt_a_dire = u"Bravo, la , la réponse est %s = %s" % (exp_expected, expected)
+                txt_a_dire = u"Bravo, la réponse est %s = %s" % (exp_expected, expected)
                 txt_a_dire = format_speak(txt_a_dire)
                 txt_a_ecrire = u"%s\nBravo, la réponse est %s = %s" % (question, exp_expected, expected)
             else:
@@ -379,3 +380,18 @@ def exo_probleme(request, pk):
         request.session['exp_expected'] = str(exp_expected)
 
     return render(request, 'school/exo_probleme.html', locals())
+
+
+def probleme_new(request):
+    if request.method == "POST":
+        form = ProblemeForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.published_date = datetime.datetime.now()
+            post.save()
+            problemes = Probleme.objects.all()
+            return render(request, 'school/math_probleme_list.html', locals())
+    else:
+        form = ProblemeForm()
+    return render(request, 'school/probleme_new.html', {'form': form})

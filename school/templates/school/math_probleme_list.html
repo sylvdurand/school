@@ -1,6 +1,15 @@
 {% extends 'school/base.html' %}
+{% load static %}
 
 {% block content %}
+
+    <h2>Ajouter un problème :</h2>
+        <a href="{% url 'probleme_new' %}">
+            <img title="Créer un nouveau problème" src="{% static 'images/bullet_add_32.gif' %}" alt="Django" align="absmiddle" />
+            Ajouter un problème
+        </a>
+    <hr>
+
     <h1>Voici la liste des problémes :</h1>
 
     {% regroup problemes by classe as classe_list %}
