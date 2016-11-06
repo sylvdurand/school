@@ -30,7 +30,7 @@ def is_float(v):
         return False
 
 def format_speak(txt):
-    dic_replace_speak = {u'-':u'moins', u'*': u'multiplié par', u"'": u'apostrophe',u'=': u'égal'}
+    dic_replace_speak = {u'-':u'moins', u'*': u'multiplié par', u"'": u'apostrophe',u'=': u'égale'}
     for o, d in dic_replace_speak.items():
         txt = txt.replace(o,d)
     return txt
